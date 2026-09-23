@@ -1,0 +1,10 @@
+{
+  "name":"Margalla Elite Construction (Pvt) Ltd",
+  "short_name":"MEC",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#090909",
+  "theme_color":"#090909",
+  "description":"Construction and property development in Islamabad and surrounding areas.",
+  "icons":[{"src":"/mec-logo-website-bg.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
+}
