@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEC Admin Dashboard</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#070707;color:#f5f5f5;font-family:Arial,sans-serif}
+:root{--gold:#d4af37;--line:#292929;--panel:#111}
+.app{min-height:100vh;display:flex}.side{position:fixed;left:0;top:0;bottom:0;width:245px;background:#0d0d0d;border-right:1px solid var(--line);padding:22px 14px}
+.brand{padding:8px 10px 22px;border-bottom:1px solid var(--line);margin-bottom:16px}.logo{font-size:28px;font-weight:800;color:var(--gold);letter-spacing:2px}.brand b{display:block;margin-top:5px}.brand small{color:#999}
+.nav button{width:100%;border:0;background:transparent;color:#ccc;text-align:left;padding:12px;border-radius:8px;margin:2px 0}.nav button.active,.nav button:hover{background:#1b1b1b;color:#f0cf63}
+.main{margin-left:245px;width:calc(100% - 245px);padding:28px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0}.muted{color:#999}.badge{border:1px solid #304b38;color:#55c27a;border-radius:20px;padding:8px 12px;font-size:12px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card,.section{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}.card small{color:#999}.num{font-size:30px;font-weight:800;margin-top:7px}
+.section{margin-top:18px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.head h2{margin:0;font-size:18px}
+.btn{background:#191919;color:#fff;border:1px solid #3a3a3a;border-radius:8px;padding:10px 14px}.gold{background:var(--gold);border-color:var(--gold);color:#080808;font-weight:700}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px;border-bottom:1px solid var(--line);font-size:13px}th{color:#999}
+.status{color:#55c27a}.form{display:none}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field label{display:block;color:#aaa;font-size:12px;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;background:#090909;color:#fff;border:1px solid #333;border-radius:8px;padding:10px}.field textarea{min-height:90px}.full{grid-column:1/-1}.actions{text-align:right;margin-top:14px}
+.notice{background:#17140b;border:1px solid #4a3c16;color:#e7d18b;padding:12px;border-radius:8px;font-size:13px}
+.hidden{display:none!important}.mobile{display:none}
+@media(max-width:850px){.side{transform:translateX(-100%);transition:.2s}.side.open{transform:translateX(0)}.main{margin-left:0;width:100%;padding:18px}.mobile{display:block;margin-bottom:16px}.cards{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr}}
+@media(max-width:500px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side" id="side">
+<div class="brand"><div class="logo">MEC</div><b>MARGALLA ELITE</b><small>CONSTRUCTION (PVT) LTD</small></div>
+<nav class="nav">
+<button class="active" onclick="show('dashboard',this)">▦ Dashboard</button>
+<button onclick="show('projects',this)">⌂ Projects</button>
+<button onclick="show('leads',this)">♧ Leads / Enquiries</button>
+<button onclick="show('calculator',this)">▣ Calculator</button>
+<button onclick="show('gallery',this)">▧ Gallery</button>
+<button onclick="show('settings',this)">⚙ Settings</button>
+</nav>
+</aside>
+<main class="main">
+<div class="mobile"><button class="btn" onclick="side.classList.toggle('open')">☰ MEC ADMIN</button></div>
+
+<section id="dashboard">
+<div class="top"><div><h1>MEC Admin Dashboard</h1><p class="muted">Manage projects, enquiries and website content.</p></div><span class="badge">● System ready</span></div>
+<div class="cards">
+<div class="card"><small>PROJECTS</small><div class="num" id="pc">0</div></div>
+<div class="card"><small>ONGOING</small><div class="num" id="oc">0</div></div>
+<div class="card"><small>LEADS</small><div class="num">0</div></div>
+<div class="card"><small>GALLERY</small><div class="num" id="gc">0</div></div>
+</div>
+<div class="section"><div class="head"><h2>Quick Actions</h2></div>
+<button class="btn gold" onclick="show('projects',document.querySelectorAll('.nav button')[1]);openForm()">+ Add Project</button>
+<button class="btn" onclick="show('leads',document.querySelectorAll('.nav button')[2])">View Enquiries</button>
+</div>
+</section>
+
+<section id="projects" class="hidden">
+<div class="head"><h2>Projects</h2><button class="btn gold" onclick="openForm()">+ Add Project</button></div>
+<div class="section form" id="projectForm">
+<div class="head"><h2>Add Project</h2></div>
+<div class="formgrid">
+<div class="field"><label>Project Name</label><input id="name"></div>
+<div class="field"><label>Location</label><input id="location"></div>
+<div class="field"><label>Plot Size</label><input id="plot"></div>
+<div class="field"><label>Status</label><select id="status"><option>Ongoing</option><option>Completed</option><option>Upcoming</option></select></div>
+<div class="field"><label>Completion %</label><input id="completion" type="number" min="0" max="100"></div>
+<div class="field"><label>Bedrooms</label><input id="bedrooms" type="number"></div>
+<div class="field"><label>Floors</label><input id="floors" type="number"></div>
+<div class="field"><label>Project Type</label><select id="type"><option>Residential</option><option>Commercial</option><option>Construction</option><option>Property</option></select></div>
+<div class="field full"><label>Cover Image URL</label><input id="image" placeholder="Image upload will be connected later"></div>
+<div class="field full"><label>Description</label><textarea id="description"></textarea></div>
+</div>
+<div class="actions"><button class="btn" onclick="closeForm()">Cancel</button> <button class="btn gold" onclick="saveProject()">Save Project</button></div>
+</div>
+<div class="section"><table><thead><tr><th>Project</th><th>Location</th><th>Status</th><th>Completion</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+
+<section id="leads" class="hidden"><div class="head"><h2>Leads / Enquiries</h2></div><div class="section"><div class="notice">This section is ready for Supabase connection. Website enquiries will be connected next.</div></div></section>
+<section id="calculator" class="hidden"><div class="head"><h2>Calculator Settings</h2></div><div class="section"><div class="notice">Public visitors will not see these rates. Secure Supabase storage will be connected next.</div></div></section>
+<section id="gallery" class="hidden"><div class="head"><h2>Gallery</h2></div><div class="section"><div class="notice">Project image upload will be connected to Supabase Storage next.</div></div></section>
+<section id="settings" class="hidden"><div class="head"><h2>Settings</h2></div><div class="section"><div class="formgrid">
+<div class="field"><label>Company</label><input value="Margalla Elite Construction Pvt Ltd" readonly></div>
+<div class="field"><label>Website</label><input value="https://margallaeliteconstruction.com" readonly></div>
+<div class="field"><label>WhatsApp</label><input value="+92 323 5844463" readonly></div>
+<div class="field"><label>Email</label><input value="info@margallaeliteconstruction.com" readonly></div>
+</div></div></section>
+</main></div>
+<script>
+let projects=JSON.parse(localStorage.getItem('mec_projects')||'[]');
+function show(id,btn){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');side.classList.remove('open');render()}
+function openForm(){document.getElementById('projectForm').style.display='block'}
+function closeForm(){document.getElementById('projectForm').style.display='none'}
+function saveProject(){let p={id:Date.now(),name:name.value.trim(),location:location.value.trim(),plot:plot.value.trim(),status:status.value,completion:completion.value||0,bedrooms:bedrooms.value||0,floors:floors.value||0,type:type.value,image:image.value.trim(),description:description.value.trim()};if(!p.name){alert('Enter project name');return}projects.push(p);localStorage.setItem('mec_projects',JSON.stringify(projects));closeForm();document.querySelectorAll('#projectForm input,#projectForm textarea').forEach(x=>x.value='');render()}
+function del(id){projects=projects.filter(p=>p.id!==id);localStorage.setItem('mec_projects',JSON.stringify(projects));render()}
+function render(){pc.textContent=projects.length;oc.textContent=projects.filter(p=>p.status==='Ongoing').length;gc.textContent=projects.filter(p=>p.image).length;rows.innerHTML=projects.length?projects.map(p=>'<tr><td><b>'+esc(p.name)+'</b><br><small>'+esc(p.plot)+'</small></td><td>'+esc(p.location)+'</td><td class="status">'+esc(p.status)+'</td><td>'+p.completion+'%</td><td><button class="btn" onclick="del('+p.id+')">Delete</button></td></tr>').join(''):'<tr><td colspan="5" class="muted">No projects added yet.</td></tr>'}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+render()
+</script>
+</body>
+</html>
