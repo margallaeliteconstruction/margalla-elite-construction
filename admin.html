@@ -83,6 +83,7 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px;bor
 <div class="field"><label>Email</label><input value="info@margallaeliteconstruction.com" readonly></div>
 </div></div></section>
 </main></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 let projects=JSON.parse(localStorage.getItem('mec_projects')||'[]');
 function show(id,btn){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');side.classList.remove('open');render()}
@@ -93,6 +94,15 @@ function del(id){projects=projects.filter(p=>p.id!==id);localStorage.setItem('me
 function render(){pc.textContent=projects.length;oc.textContent=projects.filter(p=>p.status==='Ongoing').length;gc.textContent=projects.filter(p=>p.image).length;rows.innerHTML=projects.length?projects.map(p=>'<tr><td><b>'+esc(p.name)+'</b><br><small>'+esc(p.plot)+'</small></td><td>'+esc(p.location)+'</td><td class="status">'+esc(p.status)+'</td><td>'+p.completion+'%</td><td><button class="btn" onclick="del('+p.id+')">Delete</button></td></tr>').join(''):'<tr><td colspan="5" class="muted">No projects added yet.</td></tr>'}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 render()
+const SUPABASE_URL = "https://jknxgremwpulwajohzkk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_0RPQWbboukld--xUbkaukQ_zjB_MC4r";
+
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 </script>
+</script
 </body>
 </html>
